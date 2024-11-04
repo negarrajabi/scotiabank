@@ -1,6 +1,7 @@
 package com.scotiabank.githubapp.dto
 
 import com.google.gson.annotations.SerializedName
+import com.scotiabank.githubapp.domain.model.Repo
 import java.io.Serializable
 
 data class RepoDto(
@@ -15,3 +16,11 @@ data class RepoDto(
     @SerializedName("forks")
     val forks: Int,
 ) : Serializable
+
+
+fun RepoDto.toRepo() = Repo(
+    name,
+    description,
+    starCount,
+    forks
+)
