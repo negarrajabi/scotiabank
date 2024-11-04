@@ -27,6 +27,8 @@ class UserViewModel(
 
     fun fetchUserData(userId: String) {
         viewModelScope.launch(dispatcherProvider.io) {
+            _userData.value = Result.Loading
+            _reposData.value = Result.Loading
             _userData.value = repository.getUser(userId)
             _reposData.value = repository.getUserRepos(userId)
         }

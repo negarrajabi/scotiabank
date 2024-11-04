@@ -3,6 +3,8 @@ package com.scotiabank.githubapp.di
 import com.scotiabank.githubapp.domain.datasource.UserReposDataSource
 import com.scotiabank.githubapp.network.GithubApi
 import com.scotiabank.githubapp.repository.UserRepository
+import com.scotiabank.githubapp.utils.DefaultDispatcherProvider
+import com.scotiabank.githubapp.utils.DispatcherProvider
 import com.scotiabank.githubapp.viewmodel.RepoDetailsViewModel
 import com.scotiabank.githubapp.viewmodel.UserViewModel
 import okhttp3.OkHttpClient
@@ -15,11 +17,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 val appModule = module {
     single { provideRetrofit() }
     single { provideApiService(get()) }
+
+    single { UserReposDataSource() }
+    single<DispatcherProvider> { DefaultDispatcherProvider() }
     single { UserRepository(get()) }
-    factory { UserReposDataSource() }
 
     viewModel { UserViewModel(get(), get(), get()) }
     viewModel { RepoDetailsViewModel(get()) }
+
 }
 
 
