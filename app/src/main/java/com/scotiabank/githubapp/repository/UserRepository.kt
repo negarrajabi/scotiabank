@@ -5,15 +5,32 @@ import com.scotiabank.githubapp.domain.model.User
 import com.scotiabank.githubapp.dto.toRepo
 import com.scotiabank.githubapp.dto.toUser
 import com.scotiabank.githubapp.network.GithubApi
+import com.scotiabank.githubapp.network.safeApiCall
+import com.scotiabank.githubapp.network.Result
+import retrofit2.Response
 
 
 class UserRepository(private val api: GithubApi) {
 
-    suspend fun getUser(userId: String): User? =
-        api.getUser(userId).body()?.toUser()
+    suspend fun getUser(userId: String): Result<User> {
+        return safeApiCall {
+            val response = api.getUser(userId)
+            if (response.isSuccessful) {
+                Response.success(response.body()!!.toUser())
+            } else {
+                throw Exception(response.message())
+            }
+        }
+    }
 
-
-    suspend fun getUserRepos(userId: String): List<Repo> =
-        api.getUserRepos(userId).body()?.map { it.toRepo() } ?: emptyList()
-
+    suspend fun getUserRepos(userId: String): Result<List<Repo>> {
+        return safeApiCall {
+            val response = api.getUserRepos(userId)
+            if (response.isSuccessful) {
+                Response.success(response.body()!!.map { it.toRepo() })
+            } else {
+                throw Exception(response.message())
+            }
+        }
+    }
 }
