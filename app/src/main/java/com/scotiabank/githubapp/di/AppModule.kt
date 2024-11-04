@@ -3,6 +3,7 @@ package com.scotiabank.githubapp.di
 import com.scotiabank.githubapp.domain.datasource.UserReposDataSource
 import com.scotiabank.githubapp.network.GithubApi
 import com.scotiabank.githubapp.repository.UserRepository
+import com.scotiabank.githubapp.viewmodel.RepoDetailsViewModel
 import com.scotiabank.githubapp.viewmodel.UserViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,7 +19,7 @@ val appModule = module {
     factory { UserReposDataSource() }
 
     viewModel { UserViewModel(get(), get(), get()) }
-
+    viewModel { RepoDetailsViewModel(get()) }
 }
 
 
