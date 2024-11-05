@@ -2,12 +2,10 @@ package com.scotiabank.githubapp.viewmodel
 
 import com.scotiabank.githubapp.domain.datasource.UserReposDataSource
 import com.scotiabank.githubapp.domain.model.Repo
-import com.scotiabank.githubapp.mockRepo1
 import com.scotiabank.githubapp.mockRepo2
 import com.scotiabank.githubapp.mockRepo4
 import io.mockk.*
 import junit.framework.TestCase.assertEquals
-import junit.framework.TestCase.assertNotNull
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow

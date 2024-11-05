@@ -23,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -109,10 +110,13 @@ fun UserProfileScreen(
             val repos = (reposResult as Result.Success).data
             LazyColumn {
                 items(repos) { repo ->
-                    RepoItem(repo = repo, onClick = {
-                        userViewModel.setSelectedRepo(repo)
-                        onRepoClick()
-                    })
+                    RepoItem(
+                        repo = repo, onClick = {
+                            userViewModel.setSelectedRepo(repo)
+                            onRepoClick()
+                        },
+                        modifier = Modifier.testTag("repoItem")
+                    )
                 }
             }
         }

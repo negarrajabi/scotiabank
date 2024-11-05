@@ -1,14 +1,10 @@
 package com.scotiabank.githubapp.datasource
 
 import com.scotiabank.githubapp.domain.datasource.UserReposDataSource
-import com.scotiabank.githubapp.domain.model.Repo
 import com.scotiabank.githubapp.mockRepo1
 import com.scotiabank.githubapp.mockRepo2
 import com.scotiabank.githubapp.mockRepo3
 import com.scotiabank.githubapp.mockRepo4
-import com.scotiabank.githubapp.repository.UserRepository
-import io.mockk.coEvery
-import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue

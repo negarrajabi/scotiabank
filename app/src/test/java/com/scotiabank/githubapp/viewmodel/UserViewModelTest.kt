@@ -4,7 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.scotiabank.githubapp.TestDispatcherProvider
 import com.scotiabank.githubapp.domain.datasource.UserReposDataSource
 import com.scotiabank.githubapp.domain.model.Repo
-import com.scotiabank.githubapp.domain.model.User
 import com.scotiabank.githubapp.mockRepo1
 import com.scotiabank.githubapp.mockRepo2
 import com.scotiabank.githubapp.mockRepo3
@@ -15,7 +14,6 @@ import com.scotiabank.githubapp.repository.UserRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import io.mockk.verify
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,7 +23,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.times
 
 @ExperimentalCoroutinesApi
 class UserViewModelTest {
