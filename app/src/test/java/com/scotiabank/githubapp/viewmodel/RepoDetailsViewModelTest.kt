@@ -2,53 +2,63 @@ package com.scotiabank.githubapp.viewmodel
 
 import com.scotiabank.githubapp.domain.datasource.UserReposDataSource
 import com.scotiabank.githubapp.domain.model.Repo
-import junit.framework.TestCase
+import com.scotiabank.githubapp.mockRepo1
+import com.scotiabank.githubapp.mockRepo2
+import com.scotiabank.githubapp.mockRepo4
+import io.mockk.*
 import junit.framework.TestCase.assertEquals
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.runTest
+import junit.framework.TestCase.assertNotNull
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.test.*
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
+@ExperimentalCoroutinesApi
 class RepoDetailsViewModelTest {
 
     private lateinit var viewModel: RepoDetailsViewModel
     private lateinit var userReposDataSource: UserReposDataSource
-    private val testDispatcher = StandardTestDispatcher()
-    private val testScope = TestScope(testDispatcher)
-    private val mockRepo = Repo(name = "TestRepo", forks = 100, stars = 50, description = "")
+
+    private val testDispatcher = UnconfinedTestDispatcher()
+    private val selectedRepoFlow = MutableStateFlow<Repo?>(null)
+    private val hasBadgeFlow = MutableStateFlow(false)
 
     @Before
-    fun setup() {
-        userReposDataSource = UserReposDataSource()
+    fun setUp() {
+        Dispatchers.setMain(testDispatcher)
+        userReposDataSource = mockk {
+            every { selectedRepoFlow } returns this@RepoDetailsViewModelTest.selectedRepoFlow
+            every { hasBadge } returns this@RepoDetailsViewModelTest.hasBadgeFlow
+        }
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+    }
+
+    @Test
+    fun `observeRepo updates repoDetail and showForkBadge`() = runTest(testDispatcher) {
         viewModel = RepoDetailsViewModel(userReposDataSource)
+        hasBadgeFlow.update { true }
+        selectedRepoFlow.update { mockRepo4 }
+
+        advanceUntilIdle()
+        assertEquals(mockRepo4, viewModel.repoDetail.value)
+        assertEquals(true, viewModel.showForkBadge.value)
     }
 
     @Test
-    fun `setRepoDetail sets repoDetail correctly`() = testScope.runTest {
+    fun `observeRepo updates repoDetail when selectedRepoFlow changes`() = runTest(testDispatcher) {
+        viewModel = RepoDetailsViewModel(userReposDataSource)
+        selectedRepoFlow.update { mockRepo2 }
 
-        viewModel.setRepoDetail(mockRepo, totalForks = 2000)
-
-        val repoDetail = viewModel.repoDetail.first()
-        assertEquals(mockRepo, repoDetail)
+        advanceUntilIdle()
+        assertEquals(mockRepo2, viewModel.repoDetail.value)
     }
 
-    @Test
-    fun `setRepoDetail sets showForkBadge to true when totalForks is greater than 5000`() =
-        testScope.runTest {
-            viewModel.setRepoDetail(mockRepo, totalForks = 6000)
-
-            val showForkBadge = viewModel.showForkBadge.first()
-            TestCase.assertTrue(showForkBadge)
-        }
-
-    @Test
-    fun `setRepoDetail sets showForkBadge to false when totalForks is 5000 or less`() =
-        testScope.runTest {
-            viewModel.setRepoDetail(mockRepo, totalForks = 5000)
-
-            val showForkBadge = viewModel.showForkBadge.first()
-            TestCase.assertFalse(showForkBadge)
-        }
 }

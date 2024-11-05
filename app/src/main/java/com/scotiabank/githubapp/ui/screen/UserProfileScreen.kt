@@ -39,7 +39,7 @@ import org.koin.androidx.compose.viewModel
 
 @Composable
 fun UserProfileScreen(
-    onRepoClick: (Repo) -> Unit,
+    onRepoClick: () -> Unit,
 ) {
     val userViewModel: UserViewModel by viewModel()
     val userResult by userViewModel.userData.collectAsState()
@@ -109,7 +109,10 @@ fun UserProfileScreen(
             val repos = (reposResult as Result.Success).data
             LazyColumn {
                 items(repos) { repo ->
-                    RepoItem(repo = repo, onClick = { onRepoClick(repo) })
+                    RepoItem(repo = repo, onClick = {
+                        userViewModel.setSelectedRepo(repo)
+                        onRepoClick()
+                    })
                 }
             }
         }

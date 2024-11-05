@@ -25,6 +25,11 @@ class UserViewModel(
     private val _reposData = MutableStateFlow<Result<List<Repo>>>(Result.NotLoaded)
     val reposData: StateFlow<Result<List<Repo>>> = _reposData
 
+
+    init {
+        observeReposData()
+    }
+
     fun fetchUserData(userId: String) {
         viewModelScope.launch(dispatcherProvider.io) {
             _userData.value = Result.Loading
@@ -34,7 +39,23 @@ class UserViewModel(
         }
     }
 
-    fun getTotalForks(repos: List<Repo>): Int {
+    private fun observeReposData() {
+        viewModelScope.launch {
+            reposData.collect { result ->
+                if (result is Result.Success) {
+                    val totalForks = getTotalForks(result.data)
+                    dataSource.updateTotalFork(totalForks)
+                }
+            }
+        }
+    }
+
+    fun setSelectedRepo(repo: Repo) {
+        dataSource.setSelectedRepo(repo)
+    }
+
+
+    private fun getTotalForks(repos: List<Repo>): Int {
         return dataSource.calculateTotalForks(repos)
     }
 }

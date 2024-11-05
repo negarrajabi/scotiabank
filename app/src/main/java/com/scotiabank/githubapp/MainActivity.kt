@@ -8,6 +8,7 @@ import androidx.compose.material3.Surface
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.scotiabank.githubapp.ui.screen.RepoDetailScreen
 import com.scotiabank.githubapp.ui.screen.UserProfileScreen
 
 class MainActivity : ComponentActivity() {
@@ -23,10 +24,17 @@ class MainActivity : ComponentActivity() {
                     NavHost(navController = navController, startDestination = "userProfile") {
                         composable("userProfile") {
                             UserProfileScreen(
-                                onRepoClick = { repo ->
-                                    //TODO navigate to repo details screen
+                                onRepoClick = {
+                                    navController.navigate("repoDetail")
                                 }
                             )
+                        }
+
+                        composable("repoDetail") {
+                            RepoDetailScreen(
+                                onBackPressed = {
+                                    navController.popBackStack()
+                                })
                         }
                     }
                 }
