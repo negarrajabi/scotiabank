@@ -1,12 +1,13 @@
 package com.scotiabank.githubapp.dto
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class ErrorResponse(
-//    @SerializedName("message")
+    @SerializedName("message")
     val message: String,
-//    @SerializedName("documentation_url")
+    @SerializedName("documentation_url")
     val documentation_url: String,
-//    @SerializedName("status")
+    @SerializedName("status")
     val status: String
-)
+) : Serializable

@@ -1,5 +1,6 @@
 package com.scotiabank.githubapp
 
+import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -33,5 +34,11 @@ class UserProfileScreenTest {
         composeTestRule.onAllNodesWithTag("repoItem")[0].performClick()
         composeTestRule.onNodeWithText("Forks").assertExists()
         composeTestRule.onNodeWithText("Stars").assertExists()
+    }
+
+    @Test
+    fun testUserProfileNotFound() {
+        composeTestRule.onNodeWithText("Search").performClick()
+        composeTestRule.onNodeWithText("404 Not Found").isDisplayed()
     }
 }
