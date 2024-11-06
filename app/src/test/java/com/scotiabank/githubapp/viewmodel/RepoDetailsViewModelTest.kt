@@ -1,5 +1,6 @@
 package com.scotiabank.githubapp.viewmodel
 
+import com.scotiabank.githubapp.TestDispatcherProvider
 import com.scotiabank.githubapp.domain.datasource.UserReposDataSource
 import com.scotiabank.githubapp.domain.model.Repo
 import com.scotiabank.githubapp.mockRepo2
@@ -22,6 +23,7 @@ class RepoDetailsViewModelTest {
     private lateinit var userReposDataSource: UserReposDataSource
 
     private val testDispatcher = UnconfinedTestDispatcher()
+    private val dispatcherProvider = TestDispatcherProvider()
     private val selectedRepoFlow = MutableStateFlow<Repo?>(null)
     private val hasBadgeFlow = MutableStateFlow(false)
 
@@ -41,7 +43,7 @@ class RepoDetailsViewModelTest {
 
     @Test
     fun `observeRepo updates repoDetail and showForkBadge`() = runTest(testDispatcher) {
-        viewModel = RepoDetailsViewModel(userReposDataSource)
+        viewModel = RepoDetailsViewModel(userReposDataSource, dispatcherProvider)
         hasBadgeFlow.update { true }
         selectedRepoFlow.update { mockRepo4 }
 
@@ -52,7 +54,7 @@ class RepoDetailsViewModelTest {
 
     @Test
     fun `observeRepo updates repoDetail when selectedRepoFlow changes`() = runTest(testDispatcher) {
-        viewModel = RepoDetailsViewModel(userReposDataSource)
+        viewModel = RepoDetailsViewModel(userReposDataSource, dispatcherProvider)
         selectedRepoFlow.update { mockRepo2 }
 
         advanceUntilIdle()
