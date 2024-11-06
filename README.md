@@ -70,7 +70,11 @@ The app's UI is fully implemented using **Jetpack Compose**. With Compose, the a
 - **Declarative UI**: Easy-to-read, state-driven UI components.
 - **Simplified Code Structure**: Cleaner, more maintainable code, aligning well with MVVM principles.
 - **Smooth Animations**: Compose provides powerful tools for creating seamless animations, enhancing the user experience.
-
+  
+### UI Enhancements
+- **Landscape Mode**: The app is optimized to rotate the phone for accessing full data. It provides a better user experience in landscape mode with different UI functionalities.
+- **Error Handling**: Comprehensive error handling ensures that users are shown meaningful error messages when the app encounters issues such as network errors or invalid data.
+  
 ---
 
 ## API Endpoints and Data Parsing
@@ -119,6 +123,20 @@ The app includes both **unit tests** and **UI tests** to ensure reliable functio
 Below is a GIF showing the automated UI test (Espresso) in action:
 
 ![Espresso Test GIF](assets/espressoTest.gif)
+
+---
+
+## Screenshots
+Here are three screenshots of the app in action:
+
+1. **Main User View**  
+   ![Main User View](assets/mainPage.png)
+
+2. **Repository List**  
+   ![Repository List](assets/repoDetails.png)
+
+3. **User Not Found View**  
+   ![User_Not_Found View](assets/userNotFound.png)
 
 ---
 
