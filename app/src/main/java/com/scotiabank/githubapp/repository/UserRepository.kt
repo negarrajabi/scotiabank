@@ -7,6 +7,7 @@ import com.scotiabank.githubapp.dto.toUser
 import com.scotiabank.githubapp.network.GithubApi
 import com.scotiabank.githubapp.network.safeApiCall
 import com.scotiabank.githubapp.network.Result
+import retrofit2.HttpException
 import retrofit2.Response
 
 
@@ -18,7 +19,7 @@ class UserRepository(private val api: GithubApi) {
             if (response.isSuccessful) {
                 Response.success(response.body()!!.toUser())
             } else {
-                throw Exception(response.message())
+                throw HttpException(response)
             }
         }
     }
@@ -29,7 +30,7 @@ class UserRepository(private val api: GithubApi) {
             if (response.isSuccessful) {
                 Response.success(response.body()!!.map { it.toRepo() })
             } else {
-                throw Exception(response.message())
+                throw HttpException(response)
             }
         }
     }
