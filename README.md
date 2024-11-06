@@ -58,7 +58,7 @@ The app uses **Koin** for dependency injection, providing a clean, modular struc
 
 ## CI/CD Workflow
 This project includes a **CI/CD workflow** set up through GitHub Actions. The workflow is configured to:
-1. Run automated tests, including unit and UI tests, on each push to the repository.
+1. Run automated tests, including unit tests, on each push to the repository.
 2. Verify code quality, ensuring it meets set standards and passes all required checks before merging.
 
 With CI/CD, we maintain a high level of code quality and quickly identify any issues, improving the development process efficiency.
@@ -147,3 +147,16 @@ To set up and run the project locally:
    ```bash
    git clone https://github.com/negarrajabi/scotiabank.git
    cd scotiabank
+
+---
+
+## Future Improvements
+
+1. **Add Pagination for Repository Listing**  
+   To improve loading performance and provide a smoother user experience when viewing a large number of repositories, we plan to implement pagination for the repository list. This will allow users to load a limited number of repositories at a time, rather than all at once. Before implementing, we need to verify if the GitHub API supports pagination parameters for repository requests. If supported, pagination will be incorporated into the API calls and UI design.
+
+2. **Implement Better Offline Support**  
+   To enhance user experience when offline or in low-connectivity environments, we aim to add caching for certain types of data, such as user profiles and repositories. This will allow users to access previously viewed information without needing an active internet connection. We plan to use caching libraries or Android’s built-in tools to store this data locally, automatically updating the cache when the app is online.
+
+3. **Add Espresso Tests to the CI Pipeline**  
+   Currently, our CI pipeline includes unit tests, but we plan to integrate Espresso tests to automatically validate the UI flow and interactions as part of the build process. While this will enhance the test coverage and ensure high-quality UI performance, it will also increase the CI pipeline’s duration significantly. Careful consideration and potential test optimization will be needed to balance comprehensive testing with efficient pipeline speed.
