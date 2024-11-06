@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,6 +33,7 @@ fun RepoDetailScreen(
     val viewModel: RepoDetailsViewModel by viewModel()
     val repo by viewModel.repoDetail.collectAsState()
     val showBadge by viewModel.showForkBadge.collectAsState()
+    val scrollState = rememberScrollState()
 
     Column(
         modifier = Modifier
@@ -43,7 +46,9 @@ fun RepoDetailScreen(
         }
 
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
