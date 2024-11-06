@@ -61,3 +61,15 @@ jobs:
 
       - name: Lint code
         run: ./gradlew lint
+
+      - name: Start Android Emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          avd-name: Pixel_4_API_34
+          disable-animations: true
+          script: |
+            echo "Emulator started successfully!"
+
+      - name: Run Espresso tests
+        run: ./gradlew connectedDebugAndroidTest
