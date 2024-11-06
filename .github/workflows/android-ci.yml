@@ -66,10 +66,14 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 34
-          avd-name: Pixel_4_API_34
-          disable-animations: true
+          target: google_apis
+          arch: x86_64
+          force-avd-creation: true
+          emulator-options: -no-snapshot-load
           script: |
-            echo "Emulator started successfully!"
+            emulator -avd android-34 -no-window -gpu swiftshader_indirect &
+            adb wait-for-device
+            adb shell input keyevent 82
 
       - name: Run Espresso tests
         run: ./gradlew connectedDebugAndroidTest
