@@ -18,8 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.scotiabankproject.ui.component.CustomToolbar
-import com.example.scotiabankproject.ui.component.RepoDetailRow
+import com.scotiabank.githubapp.ui.component.CustomToolbar
+import com.scotiabank.githubapp.ui.component.RepoDetailRow
 import com.scotiabank.githubapp.R
 import com.scotiabank.githubapp.viewmodel.RepoDetailsViewModel
 import org.koin.androidx.compose.viewModel
@@ -38,7 +38,7 @@ fun RepoDetailScreen(
             .background(color = MaterialTheme.colorScheme.background),
 
         ) {
-        CustomToolbar(title = repo?.name ?: "") {
+        CustomToolbar(title = repo?.name ?: "", shouldShowBackIcon = true) {
             onBackPressed()
         }
 

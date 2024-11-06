@@ -40,7 +40,7 @@ class UserViewModel(
     }
 
     private fun observeReposData() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcherProvider.io) {
             reposData.collect { result ->
                 if (result is Result.Success) {
                     val totalForks = getTotalForks(result.data)
